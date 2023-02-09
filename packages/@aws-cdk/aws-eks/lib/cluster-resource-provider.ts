@@ -17,6 +17,11 @@ export interface ClusterResourceProviderProps {
   readonly adminRole: iam.IRole;
 
   /**
+   * The IAM role to assume in order to interact with the cluster.
+   */
+  readonly clusterLambdaRole: iam.IRole;
+
+  /**
    * The VPC to provision the functions in.
    */
   readonly vpc?: ec2.IVpc;
@@ -80,6 +85,7 @@ export class ClusterResourceProvider extends NestedStack {
         AWS_STS_REGIONAL_ENDPOINTS: 'regional',
         ...props.environment,
       },
+      role: props.clusterLambdaRole ? props.clusterLambdaRole : undefined,
       handler: 'index.onEvent',
       timeout: Duration.minutes(1),
       vpc: props.subnets ? props.vpc : undefined,

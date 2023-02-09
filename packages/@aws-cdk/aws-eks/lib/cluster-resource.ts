@@ -9,6 +9,7 @@ import { ClusterResourceProvider } from './cluster-resource-provider';
 import { CfnCluster } from './eks.generated';
 
 export interface ClusterResourceProps {
+  readonly clusterLambdaRole?: iam.Role;
   readonly resourcesVpcConfig: CfnCluster.ResourcesVpcConfigProperty;
   readonly roleArn: string;
   readonly encryptionConfig?: Array<CfnCluster.EncryptionConfigProperty>;
@@ -61,6 +62,7 @@ export class ClusterResource extends Construct {
 
     const provider = ClusterResourceProvider.getOrCreate(this, {
       adminRole: this.adminRole,
+      clusterLambdaRole: props.clusterLambdaRole,
       subnets: props.subnets,
       vpc: props.vpc,
       environment: props.environment,

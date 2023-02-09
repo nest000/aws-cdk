@@ -1257,8 +1257,13 @@ export class Cluster extends ClusterBase {
    * @default - if not specified, the default role created by a lambda function will
    * be used.
    */
-
   public readonly kubectlLambdaRole?: iam.IRole;
+
+  /**
+   * An IAM role that can perform cluster operations against this cluster.
+   *
+   */
+  public readonly clusterLambdaRole?: iam.IRole;
 
   /**
    * Custom environment variables when running `kubectl` against this cluster.
